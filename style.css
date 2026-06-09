@@ -1,0 +1,700 @@
+/* Reset & Base System */
+:root {
+    --bg-color: #0c0806; /* Cacau ultra escuro */
+    --card-bg: #160f0c; /* Chocolate escuro */
+    --card-hover: #1e1511;
+    --accent-gold: #f5c469; /* Dourado Gourmet */
+    --accent-gold-hover: #e0a96d;
+    --accent-purple: #7c3aed; /* Para Chanceller */
+    --text-light: #fdfbf7;
+    --text-muted: #a89f9b;
+    --border-color: #2b1f1a;
+    --success-green: #10b981;
+    
+    --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    line-height: 1.6;
+    padding-bottom: 120px; /* Espaço para o carrinho flutuante */
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header & Hero */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    overflow: hidden;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.banner-img-container {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.1);
+}
+
+.hero-content {
+    padding: 24px 20px;
+    position: relative;
+    margin-top: -60px; /* Sobrepõe levemente o banner */
+    background: linear-gradient(to bottom, rgba(12, 8, 6, 0.6) 0%, rgba(12, 8, 6, 1) 40%);
+}
+
+.badge-live {
+    display: inline-block;
+    background-color: var(--accent-gold);
+    color: #1e1511;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-light);
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.event-details {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.map-link {
+    color: var(--text-muted);
+    text-decoration: underline;
+}
+
+.map-link:hover {
+    color: var(--accent-gold);
+}
+
+/* Caixa de Promoção Mestre */
+.promo-box {
+    background: linear-gradient(135deg, #1f1410 0%, #100a08 100%);
+    border: 1px solid var(--accent-gold);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 24px 0;
+    text-align: center;
+    box-shadow: var(--shadow-premium);
+    position: relative;
+}
+
+.promo-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--success-green);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+}
+
+.promo-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--accent-gold);
+    margin-bottom: 6px;
+}
+
+.promo-text {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.promo-combo {
+    background-color: rgba(245, 196, 105, 0.1);
+    border: 1.5px dashed var(--accent-gold);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.promo-subtext {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* Seções de Menu */
+.menu-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    margin-bottom: 16px;
+}
+
+.section-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.section-title p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* Menu Grid e Cards */
+.menu-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-card:hover {
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    background-color: var(--card-hover);
+}
+
+.menu-card.paused {
+    opacity: 0.5;
+}
+
+.menu-card.paused::after {
+    content: "ESGOTADO";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+    background-color: rgba(239, 68, 68, 0.9);
+    color: white;
+    font-weight: 900;
+    font-size: 14px;
+    padding: 6px 20px;
+    border-radius: 4px;
+    border: 2px solid white;
+    letter-spacing: 1px;
+}
+
+.item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.item-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.item-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent-gold);
+}
+
+/* Controles de Quantidade */
+.qty-controls {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 2px;
+}
+
+.btn-qty {
+    background: none;
+    border: none;
+    color: var(--accent-gold);
+    font-size: 16px;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.btn-qty:hover {
+    background-color: var(--accent-gold);
+    color: #1e1511;
+}
+
+.qty-val {
+    width: 24px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Loading State */
+.loading-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Formulário de Finalização */
+.order-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-top: 32px;
+    box-shadow: var(--shadow-premium);
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-gold);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text-light);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 1px var(--accent-gold);
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.col-8 { flex: 8; min-width: 0; }
+.col-6 { flex: 6; min-width: 0; }
+.col-4 { flex: 4; min-width: 0; }
+
+/* Radio Group Customizado */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-label {
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: var(--transition-smooth);
+}
+
+.radio-label input {
+    accent-color: var(--accent-gold);
+    width: 16px;
+    height: 16px;
+}
+
+.radio-label.active {
+    border-color: var(--accent-gold);
+    background-color: rgba(245, 196, 105, 0.05);
+}
+
+/* Seção de Endereço Animada */
+.address-fields {
+    border-top: 1px dashed var(--border-color);
+    margin-top: 10px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.address-fields h3 {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 4px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Barra Inferior Flutuante (Carrinho) */
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(12, 8, 6, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    padding: 16px 0;
+}
+
+.bar-container {
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.cart-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart-badge {
+    background-color: var(--accent-gold);
+    color: #1e1511;
+    font-weight: 800;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-total-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.total-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.total-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-light);
+    line-height: 1.1;
+}
+
+.discount-label {
+    font-size: 9px;
+    color: var(--success-green);
+    font-weight: bold;
+}
+
+.btn-submit {
+    flex: 1;
+    background-color: var(--accent-gold);
+    color: #1c120f;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(245, 196, 105, 0.3);
+    transition: var(--transition-smooth);
+}
+
+.btn-submit:hover {
+    background-color: var(--accent-gold-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(245, 196, 105, 0.4);
+}
+
+.btn-submit:active {
+    transform: translateY(1px);
+}
+
+/* Bloco Informativo do PIX */
+.pix-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: rgba(245, 196, 105, 0.05);
+    border: 1.5px dashed var(--accent-gold);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+.pix-icon {
+    font-size: 20px;
+    color: var(--accent-gold);
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.pix-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.pix-content label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 4px;
+}
+
+.pix-content p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.45;
+}
+
+.pix-key-container {
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.pix-key-label {
+    display: block;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.pix-key-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.pix-key-value {
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+}
+
+.btn-copy-pix {
+    background-color: var(--accent-gold);
+    color: #1c120f;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--transition-smooth);
+    flex-shrink: 0;
+}
+
+.btn-copy-pix:hover {
+    background-color: var(--accent-gold-hover);
+}
+
+.btn-copy-pix:active {
+    transform: scale(0.95);
+}
+
+.pix-sub-hint {
+    margin-top: 8px !important;
+    font-size: 11px !important;
+    font-style: italic;
+    color: var(--accent-gold) !important;
+}
+
+/* Caixa de Status do Cálculo de Entrega */
+.delivery-status-box {
+    margin-top: 14px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.delivery-status-box.success {
+    border-color: var(--success-green);
+    background-color: rgba(16, 185, 129, 0.05);
+    color: var(--text-light);
+}
+
+.delivery-status-box.error {
+    border-color: var(--accent-gold);
+    background-color: rgba(245, 196, 105, 0.05);
+    color: var(--accent-gold);
+}
+
+/* Detalhes de Subtotal e Taxa na Barra Inferior */
+.sub-details {
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1;
+}
+
+.tax-detail-separator {
+    color: var(--border-color);
+    opacity: 0.5;
+}
+
+.tax-detail-label span {
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+/* Estilo do preview de código do Pix */
+.code-preview {
+    font-family: monospace;
+    font-size: 13px !important;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.85;
+}

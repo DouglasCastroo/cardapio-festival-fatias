@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festival de Fatias RJ - Thamy's & Chanceller</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Banner -->
+    <header class="hero-banner">
+        <div class="banner-img-container">
+            <img src="banner_festival.png" alt="Festival de Fatias Thamy's & Chanceller" class="banner-img">
+        </div>
+        <div class="hero-content">
+            <span class="badge-live">EVENTO CONFIRMADO</span>
+            <h1>Festival de Fatias 🍰</h1>
+            <p class="subtitle">Thamy's Gourmet • Parceria Açaí Chanceller</p>
+            <div class="event-details">
+                <div class="detail-item">
+                    <span class="icon">📅</span>
+                    <span>Terça-feira, 09 de Junho</span>
+                </div>
+                <div class="detail-item">
+                    <span class="icon">📍</span>
+                    <a href="https://maps.google.com/?q=Rua+Barão+de+Itapagipe,+85,+Tijuca,+Rio+de+Janeiro" target="_blank" class="map-link">
+                        Rua Barão de Itapagipe, 85, Tijuca, RJ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Bloco de Oferta Mestre -->
+        <section class="promo-box">
+            <h2>Leve Mais por Menos!</h2>
+            <p class="promo-text">1 Fatia por <strong>R$ 15,00</strong></p>
+            <div class="promo-combo">
+                <span class="combo-icon">🎉</span>
+                <span>Combo Especial: <strong>2 Fatias por apenas R$ 25,00!</strong></span>
+            </div>
+        </section>
+
+        <!-- Menu / Categorias -->
+        <section class="menu-section">
+            <div class="section-title">
+                <h2>🍰 Fatias de Bolo Gourmet</h2>
+                <p>Reserve suas fatias antecipadamente para garantir os melhores sabores!</p>
+            </div>
+            <div id="fatias-container" class="menu-grid">
+                <!-- Inserido dinamicamente via JS -->
+                <div class="loading-state">Buscando sabores deliciosos...</div>
+            </div>
+        </section>
+
+        <section class="menu-section">
+            <div class="section-title">
+                <h2>🍪 Acompanhamentos e Doces</h2>
+                <p>Perfeitos para complementar sua experiência</p>
+            </div>
+            <div id="complementos-container" class="menu-grid">
+                <!-- Inserido dinamicamente via JS -->
+                <div class="loading-state">Buscando docinhos adicionais...</div>
+            </div>
+        </section>
+
+        <!-- Formulário de Encomenda -->
+        <section class="order-section" id="checkout">
+            <div class="section-title">
+                <h2>✍️ Finalizar Sua Reserva</h2>
+                <p>Preencha os dados e confirme a encomenda pelo WhatsApp</p>
+            </div>
+
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-group">
+                    <label for="client-name">Qual o seu nome? *</label>
+                    <input type="text" id="client-name" name="name" required placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="client-phone">WhatsApp para contato (DDD + Número) *</label>
+                    <input type="tel" id="client-phone" name="phone" required placeholder="Ex: (21) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label>Como deseja receber? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label active">
+                            <input type="radio" name="delivery_method" value="retirar" checked>
+                            <span>Retirar</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="delivery_method" value="delivery">
+                            <span>Delivery</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Campos de Endereço (Ocultos por padrão) -->
+                <div id="address-fields" class="address-fields hidden">
+                    <h3>📍 Endereço de Entrega (Tijuca / Entorno)</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-8">
+                            <label for="address-street">Rua *</label>
+                            <input type="text" id="address-street" name="street" placeholder="Rua / Avenida">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="address-number">Número *</label>
+                            <input type="text" id="address-number" name="number" placeholder="Nº">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="address-neighborhood">Bairro *</label>
+                            <input type="text" id="address-neighborhood" name="neighborhood" placeholder="Ex: Tijuca">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="address-complement">Complemento</label>
+                            <input type="text" id="address-complement" name="complement" placeholder="Apto, Bloco, etc.">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address-reference">Ponto de Referência</label>
+                        <input type="text" id="address-reference" name="reference" placeholder="Ex: Próximo à praça X">
+                    </div>
+
+                    <!-- Caixa de Status do Cálculo da Entrega -->
+                    <div id="delivery-status-box" class="delivery-status-box">
+                        <span id="delivery-status-icon">🔄</span>
+                        <span id="delivery-status-text">Aguardando endereço completo para calcular a taxa de entrega...</span>
+                    </div>
+                </div>
+
+                <!-- Forma de Pagamento Fixa em PIX -->
+                <input type="hidden" id="payment-method" name="payment" value="pix">
+                <div class="pix-info-box">
+                    <span class="pix-icon">⚡</span>
+                    <div class="pix-content">
+                        <label>Pagamento Exclusivo via PIX</label>
+                        <p>Realize o pagamento do PIX para garantir sua reserva:</p>
+                        
+                        <div class="pix-key-container" id="pix-copia-cola-container">
+                            <span class="pix-key-label">Pix Copia e Cola (Valor do Pedido)</span>
+                            <button type="button" class="btn-copy-pix" id="btn-copy-pix-dinamico" onclick="copiarPixCopiaCola()" style="width: 100%; justify-content: center; padding: 14px; font-size: 14px; margin-top: 6px;">
+                                <span id="copy-pix-btn-text">Copiar Código do PIX</span>
+                                <span class="copy-icon" style="margin-left: 8px;">📋</span>
+                            </button>
+                        </div>
+
+
+                        <p class="pix-sub-hint">Após enviar o pedido, envie o comprovante no WhatsApp.</p>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Resumo Flutuante / Carrinho -->
+    <footer class="bottom-bar hidden" id="bottom-bar">
+        <div class="bar-container">
+            <div class="cart-summary">
+                <span id="cart-count" class="cart-badge">0</span>
+                <div class="cart-total-box">
+                    <div class="total-row main-total">
+                        <span class="total-label">Total</span>
+                        <span id="cart-total" class="total-value">R$ 0,00</span>
+                    </div>
+                    <div class="total-row sub-details" id="delivery-tax-row">
+                        <span class="tax-detail-label">Itens: <span id="cart-subtotal">R$ 0,00</span></span>
+                        <span class="tax-detail-separator">|</span>
+                        <span class="tax-detail-label">Entrega: <span id="cart-delivery-tax">Grátis</span></span>
+                    </div>
+                    <span id="combo-discount" class="discount-label hidden">Economia aplicada!</span>
+                </div>
+            </div>
+            <button type="button" class="btn-submit" id="btn-submit-order">
+                <span>Enviar Pedido</span>
+                <span class="btn-icon">📲</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>

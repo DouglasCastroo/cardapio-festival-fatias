@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Festival de Fatias</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0806;
+            --card-bg: #160f0c;
+            --accent-gold: #f5c469;
+            --accent-gold-hover: #e0a96d;
+            --text-light: #fdfbf7;
+            --text-muted: #a89f9b;
+            --border-color: #2b1f1a;
+            --success-green: #10b981;
+            --danger-red: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            padding: 20px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--accent-gold);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 5px 0 0 0;
+        }
+
+        /* Tela de Bloqueio por Senha */
+        .lock-screen {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 50px;
+        }
+
+        .lock-screen h2 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lock-screen input {
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 4px;
+            width: 150px;
+            margin: 20px 0;
+            outline: none;
+        }
+
+        .lock-screen input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .btn {
+            background-color: var(--accent-gold);
+            color: #1c120f;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Painel Admin Principal */
+        .admin-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--accent-gold);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: white;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Lista de Sabores / Controle */
+        .flavor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .flavor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            gap: 12px;
+        }
+
+        .flavor-details {
+            flex: 1;
+            min-width: 0; /* Evita que o flexbox esmague os inputs no celular */
+        }
+
+        .flavor-details span {
+            font-weight: 600;
+            display: block;
+        }
+
+        .flavor-details small {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .flavor-price-input {
+            width: 80px;
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px;
+            color: white;
+            text-align: right;
+            outline: none;
+        }
+
+        .flavor-price-input:focus {
+            border-color: var(--accent-gold);
+        }
+
+        .flavor-name-input {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid var(--border-color);
+            color: #ffffff !important;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 10px;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .flavor-name-input:focus {
+            background-color: rgba(0,0,0,0.45);
+            border-color: var(--accent-gold);
+        }
+
+        .flavor-desc-input {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid var(--border-color);
+            color: #a89f9b !important;
+            font-family: inherit;
+            font-size: 11px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s ease;
+            margin-top: 6px;
+        }
+
+        .flavor-desc-input:focus {
+            background-color: rgba(0,0,0,0.45);
+            border-color: var(--accent-gold);
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: var(--danger-red);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-delete:hover {
+            background-color: rgba(239, 68, 68, 0.15);
+        }
+
+        /* Toggle Switch Customizado */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3b2c26;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--text-light);
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Notificação */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--success-green);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            font-weight: 700;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <h1>Painel Administrativo</h1>
+            <p>Festival de Fatias RJ • Controle de Estoque & Valores</p>
+        </header>
+
+        <!-- Bloqueio por Senha -->
+        <div id="lock-screen" class="lock-screen">
+            <h2>Digite a Senha Operacional</h2>
+            <p style="color: var(--text-muted); font-size: 13px;">Acesso restrito para equipe O Thamy's & Chanceller</p>
+            <input type="password" id="admin-pass" placeholder="••••" maxlength="4" autofocus>
+            <br>
+            <button class="btn" onclick="verificarSenha()">Entrar no Painel</button>
+        </div>
+
+        <!-- Painel Admin -->
+        <div id="admin-content" class="admin-content hidden">
+            
+            <!-- Menu de Abas -->
+            <div class="admin-tabs" style="display: flex; gap: 8px; margin-bottom: 24px;">
+                <button type="button" class="btn tab-btn active" onclick="switchTab('pdv')" id="tab-btn-pdv" style="flex: 1; padding: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: center; border: 1px solid var(--border-color); background-color: var(--accent-gold); color: #1c120f;">🖥️ PDV Local</button>
+                <button type="button" class="btn tab-btn" onclick="switchTab('caixa')" id="tab-btn-caixa" style="flex: 1; padding: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: center; border: 1px solid var(--border-color); background-color: var(--border-color); color: var(--text-muted);">📊 Faturamento</button>
+                <button type="button" class="btn tab-btn" onclick="switchTab('estoque')" id="tab-btn-estoque" style="flex: 1; padding: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: center; border: 1px solid var(--border-color); background-color: var(--border-color); color: var(--text-muted);">⚙️ Estoque/Preços</button>
+            </div>
+
+            <!-- TAB 1: PDV Local (Venda Presencial) -->
+            <div id="tab-pdv" class="tab-content">
+                <div class="admin-panel">
+                    <h3 class="section-title">Lançar Nova Venda Presencial</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: -10px; margin-bottom: 16px;">
+                        Registre vendas no balcão rapidamente inserindo apenas o valor e forma de pagamento.
+                    </p>
+                    
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="pdv-valor-venda-input" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Valor Total da Venda (R$) *</label>
+                        <input type="text" id="pdv-valor-venda-input" inputmode="numeric" placeholder="R$ 0,00" style="font-size: 20px; padding: 12px; font-weight: 700; color: var(--accent-gold); text-align: center; background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-color); border-radius: 8px; outline: none; margin-top: 6px;" oninput="formatarMoedaPdv(this)">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="pdv-observacao" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Descrição da Venda (Opcional)</label>
+                        <input type="text" id="pdv-observacao" placeholder="Ex: 2 fatias prestigio, coco" style="padding: 10px; background-color: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 8px; color: white; outline: none; margin-top: 6px;">
+                    </div>
+                    
+                    <div style="border-top: 1px dashed var(--border-color); padding-top: 16px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 800;">
+                            <span>Total Lançado:</span>
+                            <span id="pdv-total-venda" style="color: var(--accent-gold); font-size: 20px;">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Forma de Pagamento -->
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Forma de Pagamento:</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px;">
+                            <label class="radio-label active" style="padding: 10px; justify-content: center; cursor: pointer; border-radius: 8px;" id="lbl-pgto-pix">
+                                <input type="radio" name="pdv_payment" value="pix" checked onchange="changePdvPayment('pix')"> Pix
+                            </label>
+                            <label class="radio-label" style="padding: 10px; justify-content: center; cursor: pointer; border-radius: 8px;" id="lbl-pgto-dinheiro">
+                                <input type="radio" name="pdv_payment" value="dinheiro" onchange="changePdvPayment('dinheiro')"> Dinheiro
+                            </label>
+                            <label class="radio-label" style="padding: 10px; justify-content: center; cursor: pointer; border-radius: 8px;" id="lbl-pgto-debito">
+                                <input type="radio" name="pdv_payment" value="debito" onchange="changePdvPayment('debito')"> Débito
+                            </label>
+                            <label class="radio-label" style="padding: 10px; justify-content: center; cursor: pointer; border-radius: 8px;" id="lbl-pgto-credito">
+                                <input type="radio" name="pdv_payment" value="credito" onchange="changePdvPayment('credito')"> Crédito
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Calculadora de Troco (Oculta por padrão) -->
+                    <div id="pdv-troco-box" class="hidden" style="background-color: rgba(0,0,0,0.3); border: 1px solid var(--border-color); padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px;">
+                            <label style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Valor Recebido (R$):</label>
+                            <input type="text" id="pdv-valor-recebido" inputmode="numeric" placeholder="R$ 0,00" style="width: 100px; text-align: right; background-color: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: white; padding: 6px; border-radius: 6px;" oninput="formatarMoedaRecebido(this)">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px;">
+                            <span>Troco a Devolver:</span>
+                            <span id="pdv-troco-valor" style="color: var(--accent-gold);">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" style="width: 100%; padding: 14px; font-size: 15px;" onclick="registrarVendaPresencial()">
+                        💾 CONFIRMAR VENDA E LANÇAR
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: Faturamento & Histórico -->
+            <div id="tab-caixa" class="tab-content hidden">
+                <div class="admin-panel">
+                    <h3 class="section-title">Resumo Financeiro do Festival</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+                        <div style="background-color: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center;">
+                            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Faturado</span>
+                            <div id="faturamento-total" style="font-size: 22px; font-weight: 800; color: var(--accent-gold); margin-top: 4px;">R$ 0,00</div>
+                        </div>
+                        <div style="background-color: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center;">
+                            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Itens Vendidos</span>
+                            <div id="faturamento-qtd-itens" style="font-size: 22px; font-weight: 800; color: var(--text-light); margin-top: 4px;">0 un</div>
+                        </div>
+                    </div>
+
+                    <!-- Divisão por Tipo de Pagamento -->
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; background-color: rgba(0,0,0,0.15); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                            <span style="color: var(--text-muted);">⚡ Pix:</span>
+                            <span id="faturamento-pix" style="font-weight: 700;">R$ 0,00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                            <span style="color: var(--text-muted);">💵 Dinheiro:</span>
+                            <span id="faturamento-dinheiro" style="font-weight: 700;">R$ 0,00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                            <span style="color: var(--text-muted);">💳 Cartão de Débito:</span>
+                            <span id="faturamento-debito" style="font-weight: 700;">R$ 0,00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                            <span style="color: var(--text-muted);">💳 Cartão de Crédito:</span>
+                            <span id="faturamento-credito" style="font-weight: 700;">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Histórico de Vendas Recentes -->
+                    <h3 class="section-title">Histórico de Vendas (Balcão)</h3>
+                    <div id="historico-vendas-container" class="flavor-list" style="max-height: 250px; overflow-y: auto;">
+                        <!-- Inserido dinamicamente via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Controle de Estoque & Parâmetros (Configurações antigas) -->
+            <div id="tab-estoque" class="tab-content hidden">
+                <!-- Cadastrar Novo Produto -->
+                <div class="admin-panel" style="background-color: rgba(245, 196, 105, 0.03); border: 1.5px solid var(--accent-gold); border-radius: 16px;">
+                    <h3 class="section-title">➕ Cadastrar Novo Produto</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: -10px; margin-bottom: 16px;">
+                        Cadastre novos sabores ou acompanhamentos diretamente no seu cardápio:
+                    </p>
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label for="new-item-name">Nome do Produto *</label>
+                            <input type="text" id="new-item-name" placeholder="Ex: Fatia Prestígio">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-item-price">Preço Base (R$) *</label>
+                            <input type="number" id="new-item-price" step="0.5" placeholder="15.00">
+                        </div>
+                    </div>
+                    <div class="row-grid" style="margin-top: 8px;">
+                        <div class="form-group">
+                            <label for="new-item-desc">Descrição / Recheios</label>
+                            <input type="text" id="new-item-desc" placeholder="Ex: Coco ralado com chocolate...">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-item-category">Categoria *</label>
+                            <select id="new-item-category" style="background-color: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; color: white; outline: none; font-size: 14px;">
+                                <option value="Fatias">Fatias de Bolo</option>
+                                <option value="Complementos">Acompanhamentos/Doces</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn" style="width: 100%; margin-top: 16px; background-color: var(--success-green); color: white;" onclick="cadastrarNovoItem()">
+                        ➕ ADICIONAR PRODUTO À LISTA
+                    </button>
+                </div>
+
+                <!-- Configurações Gerais -->
+                <div class="admin-panel">
+                    <h3 class="section-title">Parâmetros de Vendas</h3>
+                    
+                    <div class="form-group">
+                        <label for="admin-whatsapp">WhatsApp de Recebimento de Pedidos (DDD + Número)</label>
+                        <input type="text" id="admin-whatsapp" placeholder="Ex: 5522988441827">
+                    </div>
+    
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label for="admin-preco-fatia">Preço Unitário da Fatia (R$)</label>
+                            <input type="number" id="admin-preco-fatia" step="0.5" placeholder="15.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-preco-combo">Preço do Combo (2 Fatias) (R$)</label>
+                            <input type="number" id="admin-preco-combo" step="0.5" placeholder="25.00">
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Controle de Sabores -->
+                <div class="admin-panel">
+                    <h3 class="section-title">Controle de Estoque (Fatias Gourmet)</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: -10px; margin-bottom: 16px;">
+                        Desmarque os sabores que esgotarem para pausar a venda deles no cliente instantaneamente.
+                    </p>
+                    <div id="fatias-list" class="flavor-list">
+                        <!-- Inserido via JS -->
+                    </div>
+                </div>
+    
+                <!-- Controle de Acompanhamentos -->
+                <div class="admin-panel">
+                    <h3 class="section-title">Controle de Acompanhamentos e Preços Específicos</h3>
+                    <div id="complementos-list" class="flavor-list">
+                        <!-- Inserido via JS -->
+                    </div>
+                </div>
+    
+                <!-- Botões de Ação -->
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <button class="btn" style="width: 100%; padding: 16px; font-size: 16px;" onclick="salvarConfiguracoes()">
+                        💾 SALVAR CARDÁPIO E ATUALIZAR CLIENTES
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast Success -->
+    <div id="toast" class="toast hidden">Cardápio atualizado na nuvem com sucesso!</div>
+
+    <script>
+        const BUCKET_ID = "sabores";
+        const KVDB_URL = `https://kvdb.io/HupTywL6Nr1yeDcDXgTyme/${BUCKET_ID}`;
+        
+        let configAtual = {};
+        const senhaCorreta = "2001"; // Senha fornecida pelo usuário
+        let pdvTotalGeral = 0.0;
+
+        // Verifica Senha
+        function verificarSenha() {
+            const input = document.getElementById("admin-pass").value;
+            if (input === senhaCorreta) {
+                document.getElementById("lock-screen").classList.add("hidden");
+                document.getElementById("admin-content").classList.remove("hidden");
+                inicializarPainel();
+            } else {
+                alert("Senha incorreta, papai! Tente novamente.");
+                document.getElementById("admin-pass").value = "";
+                document.getElementById("admin-pass").focus();
+            }
+        }
+
+        // Permite dar Enter na senha
+        document.getElementById("admin-pass").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") verificarSenha();
+        });
+
+        // Inicializa o Painel carregando os dados
+        async function inicializarPainel() {
+            try {
+                // Tenta buscar do KVDB
+                const response = await fetch(KVDB_URL);
+                if (response.ok) {
+                    configAtual = await response.json();
+                } else {
+                    throw new Error("Sem dados na nuvem");
+                }
+            } catch (e) {
+                // Se falhar, busca o padrão local (com cache buster)
+                console.warn("Buscando configurações locais de fallback...");
+                const responseLocal = await fetch("Configuracoes_Padrao.json?v=" + new Date().getTime());
+                configAtual = await responseLocal.json();
+            }
+
+            preencherFormulario();
+            switchTab('pdv'); // Abre por padrão na tela do PDV
+        }
+
+        // Preenche os campos do formulário de estoque
+        function preencherFormulario() {
+            document.getElementById("admin-whatsapp").value = configAtual.whatsapp || "";
+            document.getElementById("admin-preco-fatia").value = configAtual.preco_fatia || 15.00;
+            document.getElementById("admin-preco-combo").value = configAtual.preco_combo || 25.00;
+
+            const fatiasList = document.getElementById("fatias-list");
+            const complementosList = document.getElementById("complementos-list");
+
+            fatiasList.innerHTML = "";
+            complementosList.innerHTML = "";
+
+            configAtual.itens.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "flavor-item";
+                div.innerHTML = `
+                    <div class="flavor-details">
+                        <input type="text" class="flavor-name-input" id="name-${item.id}" value="${item.nome}" placeholder="Sabor / Produto">
+                        <input type="text" class="flavor-desc-input" id="desc-${item.id}" value="${item.descricao || ''}" placeholder="Descrição / Ingredientes">
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <input type="number" class="flavor-price-input" id="price-${item.id}" step="0.5" value="${item.preco}">
+                        <label class="switch">
+                            <input type="checkbox" id="status-${item.id}" ${item.ativo ? 'checked' : ''}>
+                            <span class="slider"></span>
+                        </label>
+                        <button type="button" class="btn-delete" onclick="deletarItemDoCardapio('${item.id}')" title="Excluir item">🗑️</button>
+                    </div>
+                `;
+
+                if (item.categoria === "Fatias") {
+                    fatiasList.appendChild(div);
+                } else {
+                    complementosList.appendChild(div);
+                }
+            });
+        }
+
+        // Navegação entre abas
+        window.switchTab = function(tabName) {
+            document.getElementById("tab-pdv").classList.add("hidden");
+            document.getElementById("tab-caixa").classList.add("hidden");
+            document.getElementById("tab-estoque").classList.add("hidden");
+            
+            const btnPdv = document.getElementById("tab-btn-pdv");
+            const btnCaixa = document.getElementById("tab-btn-caixa");
+            const btnEstoque = document.getElementById("tab-btn-estoque");
+            
+            // Reseta cores de todas as abas
+            [btnPdv, btnCaixa, btnEstoque].forEach(btn => {
+                btn.classList.remove("active");
+                btn.style.backgroundColor = "var(--border-color)";
+                btn.style.color = "var(--text-muted)";
+            });
+            
+            // Ativa a aba clicada
+            const targetBtn = document.getElementById(`tab-btn-${tabName}`);
+            targetBtn.classList.add("active");
+            targetBtn.style.backgroundColor = "var(--accent-gold)";
+            targetBtn.style.color = "#1c120f";
+            
+            if (tabName === 'pdv') {
+                document.getElementById("tab-pdv").classList.remove("hidden");
+            } else if (tabName === 'caixa') {
+                document.getElementById("tab-caixa").classList.remove("hidden");
+                renderizarRelatorios();
+            } else if (tabName === 'estoque') {
+                document.getElementById("tab-estoque").classList.remove("hidden");
+            }
+        }
+
+        // Formata o valor digitado no PDV como moeda (R$ 0,00) com vírgula automática
+        window.formatarMoedaPdv = function(input) {
+            let valor = input.value.replace(/\D/g, "");
+            let numero = (parseFloat(valor) / 100) || 0.0;
+            
+            if (numero === 0) {
+                input.value = "";
+                pdvTotalGeral = 0.0;
+            } else {
+                input.value = "R$ " + numero.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                pdvTotalGeral = numero;
+            }
+            
+            document.getElementById("pdv-total-venda").innerText = `R$ ${pdvTotalGeral.toFixed(2)}`;
+            calcularTroco();
+        }
+
+        // Formata o valor recebido como moeda com vírgula automática
+        window.formatarMoedaRecebido = function(input) {
+            let valor = input.value.replace(/\D/g, "");
+            let numero = (parseFloat(valor) / 100) || 0.0;
+            
+            if (numero === 0) {
+                input.value = "";
+            } else {
+                input.value = "R$ " + numero.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            calcularTroco();
+        }
+
+        // Muda forma de pagamento no PDV e exibe troco
+        window.changePdvPayment = function(method) {
+            document.getElementById("lbl-pgto-pix").classList.remove("active");
+            document.getElementById("lbl-pgto-dinheiro").classList.remove("active");
+            document.getElementById("lbl-pgto-debito").classList.remove("active");
+            document.getElementById("lbl-pgto-credito").classList.remove("active");
+            
+            document.getElementById(`lbl-pgto-${method}`).classList.add("active");
+            
+            const trocoBox = document.getElementById("pdv-troco-box");
+            if (method === "dinheiro") {
+                trocoBox.classList.remove("hidden");
+                document.getElementById("pdv-valor-recebido").value = "";
+                document.getElementById("pdv-troco-valor").innerText = "R$ 0,00";
+                document.getElementById("pdv-valor-recebido").focus();
+            } else {
+                trocoBox.classList.add("hidden");
+            }
+        }
+
+        // Calcula troco em dinheiro usando o valor limpo da máscara
+        window.calcularTroco = function() {
+            const recebidoStr = document.getElementById("pdv-valor-recebido").value.replace(/\D/g, "");
+            const recebidoVal = (parseFloat(recebidoStr) / 100) || 0.0;
+            const trocoSpan = document.getElementById("pdv-troco-valor");
+            
+            if (recebidoVal >= pdvTotalGeral && pdvTotalGeral > 0) {
+                const troco = recebidoVal - pdvTotalGeral;
+                trocoSpan.innerText = `R$ ${troco.toFixed(2)}`;
+                trocoSpan.style.color = "var(--success-green)";
+            } else {
+                trocoSpan.innerText = "R$ 0,00";
+                trocoSpan.style.color = "var(--accent-gold)";
+            }
+        }
+
+        // Registra venda presencial e envia pra nuvem
+        window.registrarVendaPresencial = async function() {
+            if (pdvTotalGeral <= 0) {
+                alert("Papai, digite o valor da venda antes de confirmar!");
+                return;
+            }
+            
+            const metodoPagamento = document.querySelector('input[name="pdv_payment"]:checked')?.value || "pix";
+            const recebidoStr = document.getElementById("pdv-valor-recebido").value.replace(/\D/g, "");
+            const recebidoVal = (parseFloat(recebidoStr) / 100) || 0.0;
+            const observacao = document.getElementById("pdv-observacao").value.trim();
+            
+            if (metodoPagamento === "dinheiro" && recebidoVal < pdvTotalGeral) {
+                alert("O valor recebido em dinheiro é menor do que o total da venda, papai!");
+                return;
+            }
+            
+            // Monta o objeto da venda com item genérico
+            const novaVenda = {
+                id: "venda_" + new Date().getTime(),
+                timestamp: new Date().toISOString(),
+                itens: [{
+                    id: "venda_avulsa",
+                    nome: observacao || "Venda de Balcão",
+                    qtd: 1,
+                    precoUnitario: pdvTotalGeral
+                }],
+                pagamento: metodoPagamento,
+                valor: pdvTotalGeral,
+                recebido: recebidoVal || pdvTotalGeral,
+                troco: recebidoVal > pdvTotalGeral ? recebidoVal - pdvTotalGeral : 0.0
+            };
+            
+            // Inicializa lista de vendas na nuvem se não existir
+            if (!configAtual.vendas) {
+                configAtual.vendas = [];
+            }
+            
+            configAtual.vendas.push(novaVenda);
+            
+            // Salva na nuvem (KVDB)
+            try {
+                const response = await fetch(KVDB_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(configAtual)
+                });
+                
+                if (response.ok) {
+                    showToast();
+                    
+                    // Sucesso: reseta PDV
+                    document.getElementById("pdv-valor-venda-input").value = "";
+                    document.getElementById("pdv-observacao").value = "";
+                    document.getElementById("pdv-valor-recebido").value = "";
+                    document.getElementById("pdv-troco-valor").innerText = "R$ 0,00";
+                    pdvTotalGeral = 0.0;
+                    document.getElementById("pdv-total-venda").innerText = "R$ 0,00";
+                    
+                    alert("Venda de balcão registrada com sucesso, papai!");
+                } else {
+                    alert("Erro ao salvar venda no servidor.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Erro de conexão com o banco de dados.");
+            }
+        }
+
+        // Renderiza relatórios do Caixa e Histórico
+        function renderizarRelatorios() {
+            const vendas = configAtual.vendas || [];
+            
+            let totalFaturamento = 0.0;
+            let totalPix = 0.0;
+            let totalDinheiro = 0.0;
+            let totalDebito = 0.0;
+            let totalCredito = 0.0;
+            let qtdItens = 0;
+            
+            vendas.forEach(v => {
+                totalFaturamento += v.valor;
+                if (v.pagamento === "pix") totalPix += v.valor;
+                if (v.pagamento === "dinheiro") totalDinheiro += v.valor;
+                if (v.pagamento === "debito") totalDebito += v.valor;
+                if (v.pagamento === "credito") totalCredito += v.valor;
+                
+                v.itens.forEach(i => {
+                    qtdItens += i.qtd;
+                });
+            });
+            
+            document.getElementById("faturamento-total").innerText = `R$ ${totalFaturamento.toFixed(2)}`;
+            document.getElementById("faturamento-qtd-itens").innerText = `${qtdItens} un`;
+            document.getElementById("faturamento-pix").innerText = `R$ ${totalPix.toFixed(2)}`;
+            document.getElementById("faturamento-dinheiro").innerText = `R$ ${totalDinheiro.toFixed(2)}`;
+            document.getElementById("faturamento-debito").innerText = `R$ ${totalDebito.toFixed(2)}`;
+            document.getElementById("faturamento-credito").innerText = `R$ ${totalCredito.toFixed(2)}`;
+            
+            // Renderiza histórico
+            const histContainer = document.getElementById("historico-vendas-container");
+            if (!histContainer) return;
+            histContainer.innerHTML = "";
+            
+            if (vendas.length === 0) {
+                histContainer.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-style: italic; padding: 16px; font-size: 12px;">Nenhuma venda presencial registrada ainda.</div>`;
+                return;
+            }
+            
+            // Exibe as últimas vendas no topo
+            [...vendas].reverse().forEach(v => {
+                const date = new Date(v.timestamp);
+                const timeStr = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                
+                const div = document.createElement("div");
+                div.className = "flavor-item";
+                div.style.padding = "10px 14px";
+                div.style.flexDirection = "column";
+                div.style.alignItems = "stretch";
+                
+                let textoItens = v.itens.map(i => `${i.qtd}x ${i.nome}`).join(", ");
+                let iconPgto = "⚡ Pix";
+                if (v.pagamento === "dinheiro") iconPgto = "💵 Dinheiro";
+                if (v.pagamento === "debito") iconPgto = "💳 Débito";
+                if (v.pagamento === "credito") iconPgto = "💳 Crédito";
+                
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 13px;">
+                        <span>Venda - ${timeStr}</span>
+                        <span style="color: var(--accent-gold);">R$ ${v.valor.toFixed(2)}</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${textoItens} (${iconPgto})</span>
+                        <button type="button" onclick="estornarVenda('${v.id}')" style="background: none; border: none; color: var(--danger-red); font-size: 11px; font-weight: 700; cursor: pointer;">Estornar</button>
+                    </div>
+                `;
+                histContainer.appendChild(div);
+            });
+        }
+
+        // Exclui/Estorna uma venda registrada por engano
+        window.estornarVenda = async function(vendaId) {
+            if (!confirm("Tem certeza que deseja estornar essa venda, papai? Isso vai retirá-la do caixa permanentemente!")) {
+                return;
+            }
+            
+            configAtual.vendas = configAtual.vendas.filter(v => v.id !== vendaId);
+            
+            // Salva na nuvem
+            try {
+                const response = await fetch(KVDB_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(configAtual)
+                });
+                
+                if (response.ok) {
+                    showToast();
+                    renderizarRelatorios();
+                    alert("Venda estornada com sucesso, papai!");
+                } else {
+                    alert("Erro ao remover venda do servidor.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Erro de conexão.");
+            }
+        }
+
+        // Cadastra um novo produto na memória e salva na nuvem
+        window.cadastrarNovoItem = async function() {
+            const nameVal = document.getElementById("new-item-name").value.trim();
+            const priceVal = parseFloat(document.getElementById("new-item-price").value) || 0;
+            const descVal = document.getElementById("new-item-desc").value.trim();
+            const catVal = document.getElementById("new-item-category").value;
+
+            if (!nameVal || priceVal <= 0) {
+                alert("Papai, preencha o Nome e o Preço do novo produto!");
+                return;
+            }
+
+            // Gera um ID baseado no nome sem acentos
+            const cleanId = "item_" + nameVal
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9_]/g, "_")
+                + "_" + new Date().getTime();
+
+            const novoItem = {
+                id: cleanId,
+                nome: nameVal,
+                descricao: descVal,
+                preco: priceVal,
+                ativo: true,
+                categoria: catVal
+            };
+
+            if (!configAtual.itens) {
+                configAtual.itens = [];
+            }
+
+            configAtual.itens.push(novoItem);
+
+            // Limpa inputs
+            document.getElementById("new-item-name").value = "";
+            document.getElementById("new-item-price").value = "";
+            document.getElementById("new-item-desc").value = "";
+
+            preencherFormulario();
+            await salvarConfiguracoes();
+            alert(`Produto "${nameVal}" adicionado ao cardápio com sucesso, papai!`);
+        }
+
+        // Deleta um produto do cardápio permanentemente
+        window.deletarItemDoCardapio = async function(itemId) {
+            const item = configAtual.itens.find(i => i.id === itemId);
+            if (!item) return;
+
+            if (!confirm(`Tem certeza que deseja excluir permanentemente o item "${item.nome}" do cardápio, papai?`)) {
+                return;
+            }
+
+            configAtual.itens = configAtual.itens.filter(i => i.id !== itemId);
+            
+            preencherFormulario();
+            await salvarConfiguracoes();
+        }
+
+        // Coleta os valores do formulário (incluindo edições) e salva na nuvem
+        async function salvarConfiguracoes() {
+            // Valida WhatsApp
+            const waInput = document.getElementById("admin-whatsapp").value.trim().replace(/\D/g, '');
+            if (waInput.length < 10) {
+                alert("Por favor, digite um número de WhatsApp válido com DDD!");
+                return;
+            }
+
+            configAtual.whatsapp = waInput;
+            configAtual.preco_fatia = parseFloat(document.getElementById("admin-preco-fatia").value) || 15.00;
+            configAtual.preco_combo = parseFloat(document.getElementById("admin-preco-combo").value) || 25.00;
+
+            // Coleta status, preço, nome e descrição de cada item
+            configAtual.itens.forEach(item => {
+                const statusCheckbox = document.getElementById(`status-${item.id}`);
+                const priceInput = document.getElementById(`price-${item.id}`);
+                const nameInput = document.getElementById(`name-${item.id}`);
+                const descInput = document.getElementById(`desc-${item.id}`);
+
+                if (statusCheckbox) {
+                    item.ativo = statusCheckbox.checked;
+                }
+                if (priceInput) {
+                    item.preco = parseFloat(priceInput.value) || item.preco;
+                }
+                if (nameInput) {
+                    item.nome = nameInput.value.trim() || item.nome;
+                }
+                if (descInput) {
+                    item.descricao = descInput.value.trim();
+                }
+            });
+
+            // Envia para o KVDB
+            try {
+                const response = await fetch(KVDB_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(configAtual)
+                });
+
+                if (response.ok) {
+                    showToast();
+                } else {
+                    alert("Erro ao salvar dados no servidor. Verifique a internet.");
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Erro de conexão com o banco de dados.");
+            }
+        }
+
+        // Exibe feedback visual
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+                toast.classList.add("hidden");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

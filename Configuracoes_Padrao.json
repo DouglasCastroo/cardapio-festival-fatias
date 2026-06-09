@@ -1,0 +1,116 @@
+{
+  "whatsapp": "5522988441827",
+  "senha_admin": "2001",
+  "preco_fatia": 15.00,
+  "preco_combo": 25.00,
+  "taxa_minima": 3.00,
+  "valor_por_km": 1.00,
+  "origem_lat": -22.924822,
+  "origem_lon": -43.218520,
+  "itens": [
+    {
+      "id": "fatia_ninho_morangos",
+      "nome": "Fatia Ninho com Morangos",
+      "descricao": "Massa leve recheada com creme de leite Ninho e morangos frescos.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_matilda_dark",
+      "nome": "Fatia Matilda Dark",
+      "descricao": "Massa intensa de cacau com recheio trufado de chocolate meio amargo.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_doce_leite_ameixa",
+      "nome": "Fatia Doce de Leite com Ameixa",
+      "descricao": "Combinação clássica de doce de leite cremoso artesanal e ameixas selecionadas.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_abacaxi_coco",
+      "nome": "Fatia Abacaxi com Coco",
+      "descricao": "Massa branca úmida com recheio de abacaxi cozido e creme suave de coco ralado.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_maracuja",
+      "nome": "Fatia Maracujá",
+      "descricao": "Massa delicada com recheio cremoso e azedinho de mousse de maracujá puro.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_red_velvet",
+      "nome": "Fatia Red Velvet",
+      "descricao": "Massa aveludada vermelha com o tradicional e leve recheio de cream cheese.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_torta_pudim",
+      "nome": "Fatia Torta Pudim",
+      "descricao": "Base deliciosa de torta combinada com a textura lisinha e calda do pudim de leite.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_torta_pistache_ninho",
+      "nome": "Fatia Torta Pistache com Ninho",
+      "descricao": "Recheio nobre de creme de pistache com cobertura de brigadeiro de leite Ninho.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_torta_morango_amor",
+      "nome": "Fatia Torta Morango do Amor",
+      "descricao": "Massa especial com recheio trufado branco e cobertura irresistível de morangos.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "fatia_torta_alpino",
+      "nome": "Fatia Torta Alpino",
+      "descricao": "Recheio cremoso com o sabor marcante e pedaços do chocolate Alpino original.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Fatias"
+    },
+    {
+      "id": "torta_brownie",
+      "nome": "Torta Brownie",
+      "descricao": "Fatia de brownie super denso com cobertura cremosa especial.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Complementos"
+    },
+    {
+      "id": "torta_cookies_nutella",
+      "nome": "Torta Cookies com Nutella",
+      "descricao": "Torta crocante de cookie artesanal recheada com Nutella pura.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Complementos"
+    },
+    {
+      "id": "torta_salgada_frango_cremoso",
+      "nome": "Torta Salgada de Frango Cremoso Especial",
+      "descricao": "Fatia alta e super recheada de frango desfiado cremoso com tempero da casa.",
+      "preco": 15.00,
+      "ativo": true,
+      "categoria": "Complementos"
+    }
+  ]
+}
